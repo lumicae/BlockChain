@@ -103,11 +103,11 @@ public class JsonRpcTest {
             String cowAcct = jsonRpc.personal_newAccount("cow");
             String bal0 = jsonRpc.eth_getBalance(cowAcct);
             System.out.println("Balance: " + bal0);
-            //assertTrue(TypeConverter.StringHexToBigInteger(bal0).compareTo(BigInteger.ZERO) > 0);
+            assertTrue(TypeConverter.StringHexToBigInteger(bal0).compareTo(BigInteger.ZERO) > 0);
 
             String pendingTxFilterId = jsonRpc.eth_newPendingTransactionFilter();
             Object[] changes = jsonRpc.eth_getFilterChanges(pendingTxFilterId);
-            //assertEquals(0, changes.length);
+            assertEquals(0, changes.length);
 
             JsonRpc.CallArguments ca = new JsonRpc.CallArguments();
             ca.from = cowAcct;
@@ -121,33 +121,33 @@ public class JsonRpcTest {
             String txHash1 = jsonRpc.eth_sendTransaction(cowAcct, "0x0000000000000000000000000000000000001234", "0x300000",
                     "0x10000000000", "0x7777", "0x", "0x00");
             System.out.println("Tx hash: " + txHash1);
-            //assertTrue(TypeConverter.StringHexToBigInteger(txHash1).compareTo(BigInteger.ZERO) > 0);
+            assertTrue(TypeConverter.StringHexToBigInteger(txHash1).compareTo(BigInteger.ZERO) > 0);
 
             for (int i = 0; i < 50 && changes.length == 0; i++) {
                 changes = jsonRpc.eth_getFilterChanges(pendingTxFilterId);
                 Thread.sleep(200);
             }
-            //assertEquals(1, changes.length);
+            assertEquals(1, changes.length);
             changes = jsonRpc.eth_getFilterChanges(pendingTxFilterId);
-            //assertEquals(0, changes.length);
+            assertEquals(0, changes.length);
 
             JsonRpc.BlockResult blockResult = jsonRpc.eth_getBlockByNumber("pending", true);
             System.out.println(blockResult);
-            //assertEquals(txHash1, ((TransactionResultDTO) blockResult.transactions[0]).hash);
+            assertEquals(txHash1, ((TransactionResultDTO) blockResult.transactions[0]).hash);
 
             String hash1 = mineBlock();
 
             JsonRpc.BlockResult blockResult1 = jsonRpc.eth_getBlockByHash(hash1, true);
-            //assertEquals(hash1, blockResult1.hash);
-            //assertEquals(txHash1, ((TransactionResultDTO) blockResult1.transactions[0]).hash);
+            assertEquals(hash1, blockResult1.hash);
+            assertEquals(txHash1, ((TransactionResultDTO) blockResult1.transactions[0]).hash);
             TransactionReceiptDTO receipt1 = jsonRpc.eth_getTransactionReceipt(txHash1);
-            //assertEquals(1, receipt1.blockNumber);
-            //assertTrue(receipt1.gasUsed > 0);
-            //assertEquals(sGas, receipt1.gasUsed);
+            assertEquals(1, receipt1.blockNumber);
+            assertTrue(receipt1.gasUsed > 0);
+            assertEquals(sGas, receipt1.gasUsed);
 
             String bal1 = jsonRpc.eth_getBalance(cowAcct);
             System.out.println("Balance: " + bal0);
-            //assertTrue(TypeConverter.StringHexToBigInteger(bal0).compareTo(TypeConverter.StringHexToBigInteger(bal1)) > 0);
+            assertTrue(TypeConverter.StringHexToBigInteger(bal0).compareTo(TypeConverter.StringHexToBigInteger(bal1)) > 0);
 
             JsonRpc.CompilationResult compRes = jsonRpc.eth_compileSolidity(
                     "contract A { " +
@@ -156,9 +156,9 @@ public class JsonRpcTest {
                             "  num = a; " +
                             "  log1(0x1111, 0x2222);" +
                             "}}");
-            //assertEquals(compRes.info.abiDefinition[0].name, "num");
-            //assertEquals(compRes.info.abiDefinition[1].name, "set");
-            //assertTrue(compRes.code.length() > 10);
+            assertEquals(compRes.info.abiDefinition[0].name, "num");
+            assertEquals(compRes.info.abiDefinition[1].name, "set");
+            assertTrue(compRes.code.length() > 10);
 
             JsonRpc.CallArguments callArgs = new JsonRpc.CallArguments();
             callArgs.from = cowAcct;
@@ -171,13 +171,13 @@ public class JsonRpcTest {
             String hash2 = mineBlock();
 
             JsonRpc.BlockResult blockResult2 = jsonRpc.eth_getBlockByHash(hash2, true);
-            //assertEquals(hash2, blockResult2.hash);
-            //assertEquals(txHash2, ((TransactionResultDTO) blockResult2.transactions[0]).hash);
+            assertEquals(hash2, blockResult2.hash);
+            assertEquals(txHash2, ((TransactionResultDTO) blockResult2.transactions[0]).hash);
             TransactionReceiptDTO receipt2 = jsonRpc.eth_getTransactionReceipt(txHash2);
-            //assertTrue(receipt2.blockNumber > 1);
-            //assertTrue(receipt2.gasUsed > 0);
-            //assertEquals(sGas, receipt2.gasUsed);
-            //assertTrue(TypeConverter.StringHexToByteArray(receipt2.contractAddress).length == 20);
+            assertTrue(receipt2.blockNumber > 1);
+            assertTrue(receipt2.gasUsed > 0);
+            assertEquals(sGas, receipt2.gasUsed);
+            assertTrue(TypeConverter.StringHexToByteArray(receipt2.contractAddress).length == 20);
 
             JsonRpc.FilterRequest filterReq = new JsonRpc.FilterRequest();
             filterReq.topics = new Object[]{"0x2222"};
@@ -205,25 +205,25 @@ public class JsonRpcTest {
             String hash3 = mineBlock();
 
             JsonRpc.BlockResult blockResult3 = jsonRpc.eth_getBlockByHash(hash3, true);
-            //assertEquals(hash3, blockResult3.hash);
-            //assertEquals(txHash3, ((TransactionResultDTO) blockResult3.transactions[0]).hash);
+            assertEquals(hash3, blockResult3.hash);
+            assertEquals(txHash3, ((TransactionResultDTO) blockResult3.transactions[0]).hash);
             TransactionReceiptDTO receipt3 = jsonRpc.eth_getTransactionReceipt(txHash3);
-            //assertTrue(receipt3.blockNumber > 2);
-            //assertTrue(receipt3.gasUsed > 0);
+            assertTrue(receipt3.blockNumber > 2);
+            assertTrue(receipt3.gasUsed > 0);
 
             Object[] logs = jsonRpc.eth_getFilterLogs(filterId);
-            //assertEquals(1, logs.length);
-            //assertEquals("0x0000000000000000000000000000000000000000000000000000000000001111",
-             //       ((JsonRpc.LogFilterElement)logs[0]).data);
-            //assertEquals(0, jsonRpc.eth_getFilterLogs(filterId).length);
+            assertEquals(1, logs.length);
+            assertEquals("0x0000000000000000000000000000000000000000000000000000000000001111",
+                    ((JsonRpc.LogFilterElement)logs[0]).data);
+            assertEquals(0, jsonRpc.eth_getFilterLogs(filterId).length);
 
             String ret1 = jsonRpc.eth_call(callArgs2, blockResult2.number);
             String ret2 = jsonRpc.eth_call(callArgs2, "latest");
 
-            //assertEquals("0x0000000000000000000000000000000000000000000000000000000000000000", ret1);
-            //assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret2);
-            //assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret3);
-            //assertEquals("0x0000000000000000000000000000000000000000000000000000000000000000", ret4);
+            assertEquals("0x0000000000000000000000000000000000000000000000000000000000000000", ret1);
+            assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret2);
+            assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret3);
+            assertEquals("0x0000000000000000000000000000000000000000000000000000000000000000", ret4);
         }
 
         String mineBlock() throws InterruptedException {
