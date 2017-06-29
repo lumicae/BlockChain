@@ -640,7 +640,7 @@ public class JsonRpcImpl implements JsonRpc {
 
             return executor.getReceipt();
         } finally {
-            repository.rollback();
+            repository.rollback();//没有实现代码
         }
     }
 
@@ -650,8 +650,10 @@ public class JsonRpcImpl implements JsonRpc {
         try {
             TransactionReceipt res;
             if ("pending".equals(bnOrId)) {
-                Block pendingBlock = blockchain.createNewBlock(blockchain.getBestBlock(), pendingState.getPendingTransactions(), Collections.<BlockHeader>emptyList());
-                res = createCallTxAndExecute(args, pendingBlock, pendingState.getRepository(), worldManager.getBlockStore());
+                Block pendingBlock = blockchain.createNewBlock(blockchain.getBestBlock(),
+                		pendingState.getPendingTransactions(), Collections.<BlockHeader>emptyList());
+                res = createCallTxAndExecute(args, pendingBlock,
+                		pendingState.getRepository(), worldManager.getBlockStore());
             } else {
                 res = createCallTxAndExecute(args, getByJsonBlockId(bnOrId));
             }
@@ -732,13 +734,16 @@ public class JsonRpcImpl implements JsonRpc {
         try {
             Block b;
             if ("pending".equalsIgnoreCase(bnOrId)) {
-                b = blockchain.createNewBlock(blockchain.getBestBlock(), pendingState.getPendingTransactions(), Collections.<BlockHeader>emptyList());
+                b = blockchain.createNewBlock(blockchain.getBestBlock(), 
+                		pendingState.getPendingTransactions(), 
+                		Collections.<BlockHeader>emptyList());
             } else {
                 b = getByJsonBlockId(bnOrId);
             }
             return s = (b == null ? null : getBlockResult(b, fullTransactionObjects));
         } finally {
-            if (logger.isDebugEnabled()) logger.debug("eth_getBlockByNumber(" +  bnOrId + ", " + fullTransactionObjects + "): " + s);
+            if (logger.isDebugEnabled()) logger.debug("eth_getBlockByNumber(" +  bnOrId + ", " 
+            														+ fullTransactionObjects + "): " + s);
         }
     }
 

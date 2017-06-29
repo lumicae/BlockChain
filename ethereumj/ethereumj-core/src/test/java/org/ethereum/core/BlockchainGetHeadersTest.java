@@ -33,6 +33,7 @@ public class BlockchainGetHeadersTest {
 
     private class BlockStoreMock extends BlockStoreDummy {
 
+    	//dummy：假的，仿制品，虚拟。这里意为虚拟
         private List<Block> dummyBlocks = new ArrayList<>();
 
         public BlockStoreMock() {

@@ -17,6 +17,8 @@
  */
 package org.ethereum.jsonrpc;
 
+import java.util.Arrays;
+
 import org.ethereum.core.Block;
 import org.ethereum.core.TransactionReceipt;
 import org.ethereum.core.TransactionInfo;
@@ -58,5 +60,21 @@ public class TransactionReceiptDTO {
                         txInfo.getReceipt().getTransaction(), i);
             }
         }
+    }
+    /**
+     * 2017-6-24
+     * @author Liu Mingqi
+     */
+    @Override
+    public String toString() {
+        return "TransactionReceiptDTO{" +
+                "transactionHash='" + transactionHash + '\'' +
+                ", transactionIndex='" + transactionIndex + '\'' +
+                ", blockHash='" + blockHash + '\'' +
+                ", blockNumber='" + blockNumber + '\'' +
+                ", cumulativeGasUsed='" + cumulativeGasUsed + '\'' +
+                ", gasUsed='" + gasUsed + '\'' +
+                ", contractAddress='" + contractAddress + '\'' +
+                '}';
     }
 }
