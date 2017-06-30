@@ -15,9 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the ethereumJ library. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.ethereum.net.swarm;
 
 /**
+ * 区块与block的 区别 ？？？？？ LMQ 2017-5-19
  *  Any binary data with its key
  *  The key is normally SHA3(data)
  */
@@ -40,3 +42,4 @@ public class Chunk {
     }
 
 }
+

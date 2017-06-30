@@ -114,6 +114,7 @@ public class JsonRpcTest {
             	System.out.print(change);
             }
             System.out.println();
+
             JsonRpc.CallArguments ca = new JsonRpc.CallArguments();
             ca.from = cowAcct;
             ca.to = "0x0000000000000000000000000000000000001234";
@@ -122,10 +123,11 @@ public class JsonRpcTest {
             ca.value = "0x7777";
             ca.data = "0x";
             long sGas = TypeConverter.StringHexToBigInteger(jsonRpc.eth_estimateGas(ca)).longValue();
-            System.out.println("sGas:" + sGas);
+
+
             String txHash1 = jsonRpc.eth_sendTransaction(cowAcct, "0x0000000000000000000000000000000000001234", "0x300000",
                     "0x10000000000", "0x7777", "0x", "0x00");
-            System.out.println("Tx hash: " + txHash1);
+            System.out.println("Tx hash: " + txHash1);//0x5f3d6118867367add63a2a9316d05d9d1c5e649ee9e15eaa3b4b9c2d9e2c8bf3
             assertTrue(TypeConverter.StringHexToBigInteger(txHash1).compareTo(BigInteger.ZERO) > 0);
 
             for (int i = 0; i < 50 && changes.length == 0; i++) {
@@ -143,6 +145,7 @@ public class JsonRpcTest {
 
             JsonRpc.BlockResult blockResult = jsonRpc.eth_getBlockByNumber("pending", true);
             System.out.println("blockResult:" + blockResult);
+
             assertEquals(txHash1, ((TransactionResultDTO) blockResult.transactions[0]).hash);
 
             String hash1 = mineBlock();
@@ -243,7 +246,6 @@ public class JsonRpcTest {
             }
             String ret1 = jsonRpc.eth_call(callArgs2, blockResult2.number);
             String ret2 = jsonRpc.eth_call(callArgs2, "latest");
-         
             assertEquals("0x0000000000000000000000000000000000000000000000000000000000000000", ret1);
             assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret2);
             assertEquals("0x0000000000000000000000000000000000000000000000000000000000000777", ret3);

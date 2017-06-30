@@ -20,6 +20,11 @@ package org.ethereum.net.dht;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author LMQ
+ *不太懂这个类
+ */
 public class Bucket {
 
     public static int MAX_KADEMLIA_K = 5;

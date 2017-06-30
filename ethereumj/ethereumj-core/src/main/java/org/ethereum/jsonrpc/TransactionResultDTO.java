@@ -22,6 +22,7 @@ import org.ethereum.core.Transaction;
 
 /**
  * Created by Ruben on 8/1/2016.
+ * 交易结果数据传输对象
  */
 public class TransactionResultDTO {
 

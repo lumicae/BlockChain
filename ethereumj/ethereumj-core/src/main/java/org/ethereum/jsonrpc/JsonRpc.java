@@ -152,6 +152,11 @@ public interface JsonRpc {
         }
     }
 
+    /**
+     * 过滤器请求类信息
+     * @author LMQ
+     *
+     */
     class FilterRequest {
         public String fromBlock;
         public String toBlock;

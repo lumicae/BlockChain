@@ -338,4 +338,3 @@ public class NetStore implements ChunkStore {
     public final Statter statOutStoreReq = Statter.create("net.swarm.out.storeReq");
     public final Statter statOutGetReq = Statter.create("net.swarm.out.getReq");
 }
-

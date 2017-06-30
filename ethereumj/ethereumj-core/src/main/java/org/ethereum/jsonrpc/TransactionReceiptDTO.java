@@ -17,8 +17,8 @@
  */
 package org.ethereum.jsonrpc;
 
-import java.util.Arrays;
 
+import java.util.Arrays;
 import org.ethereum.core.Block;
 import org.ethereum.core.TransactionReceipt;
 import org.ethereum.core.TransactionInfo;
@@ -29,6 +29,8 @@ import static org.ethereum.jsonrpc.TypeConverter.toJsonHex;
 
 /**
  * Created by Ruben on 5/1/2016.
+
+ * 交易收据数据传输对象
  */
 public class TransactionReceiptDTO {
 

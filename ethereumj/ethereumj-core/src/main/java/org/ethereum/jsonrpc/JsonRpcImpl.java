@@ -641,6 +641,7 @@ public class JsonRpcImpl implements JsonRpc {
             return executor.getReceipt();
         } finally {
             repository.rollback();//没有实现代码
+
         }
     }
 
@@ -654,6 +655,7 @@ public class JsonRpcImpl implements JsonRpc {
                 		pendingState.getPendingTransactions(), Collections.<BlockHeader>emptyList());
                 res = createCallTxAndExecute(args, pendingBlock,
                 		pendingState.getRepository(), worldManager.getBlockStore());
+
             } else {
                 res = createCallTxAndExecute(args, getByJsonBlockId(bnOrId));
             }
@@ -737,6 +739,7 @@ public class JsonRpcImpl implements JsonRpc {
                 b = blockchain.createNewBlock(blockchain.getBestBlock(), 
                 		pendingState.getPendingTransactions(), 
                 		Collections.<BlockHeader>emptyList());
+
             } else {
                 b = getByJsonBlockId(bnOrId);
             }
@@ -744,6 +747,7 @@ public class JsonRpcImpl implements JsonRpc {
         } finally {
             if (logger.isDebugEnabled()) logger.debug("eth_getBlockByNumber(" +  bnOrId + ", " 
             														+ fullTransactionObjects + "): " + s);
+
         }
     }
 
